@@ -614,7 +614,7 @@ basic.forever(function () {
 
 少し長いプログラムなので、おおよその処理の流れを図で確認しましょう。
 
-![フローチャート](https://github.com/SKYTREE-1/keypad1/blob/eb919c26050c53bdf62fcb16b4fb3f4e98aa891b/images/flow_1.png?raw=true)
+![フローチャート](https://github.com/SKYTREE-1/keypad2/blob/master/images/flow2.jpg?raw=true)
 
 ```
 ## 5. もっと工夫しよう@showdialog
