@@ -1,11 +1,11 @@
-# keypad でLEDの色をコントロールしよう
+# keypad でLEDの色をコントロールしよう（発展編）
 ```package
 neopixel=github:microsoft/pxt-neopixel
 keypad=github:lioujj/pxt-keypad
 ```
 
 ## keypadを利用してライトバーの色を変えよう@showdialog
-この活動では、「カラフル・ライトバーをつくろう」で学習したLEDとkeypad を組み合わせて、指定した色に切り替えるプログラムを作ってみよう」
+この活動では、keypad を使って RGBカラーを指定してライトバーを点灯するプログラムを作成します。
 
 ![メインイメージ](https://www.kodai.uec.ac.jp/sk/make-code/np/img_neopixel.png)
 
@@ -216,7 +216,6 @@ let mode = 0
 let strip: neopixel.Strip = null
 strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
 mode = 0
-let color = ""
 basic.forever(function () {
 	
 })
@@ -231,17 +230,18 @@ A ボタンを押すことで、モードの表示が切り替わることが確
 ードが「入力受付モード」になったら、``||basic:ずっと||`` の中でキー入力を受け付けるようにします。
 つまり、モードが「入力受付モード（``||variables:mode=1||``）」の時だけ、キー操作による入力処理が実行されるようにします。
 
-キーパッドから受け取った数は、変数 **color** に代入するようプログラムをします。
+キーパッドから受け取った数は、まず、変数**c** に入れてから、チェックして 変数 **color** の末尾に付け加えるようプログラムをします。
 ここで受け取った数は、文字列型で渡されるので、必要に応じて、数値に変換して利用します。
 
 
 ## 3.キー入力を受け取る（変数の作成）
-``||variables:変数||`` の``||variables:変数を追加する...||``で、新しい変数 **color** を作成します。
-そして、最初だけに ``||variables:変数 mode を 0 にする||`` をセットして、``||advanced:高度なブロック||``の``||text:文字列||``の一番上にある``||text:" "||``をセットして、半角の1を書き入れます。
+``||variables:変数||`` の``||variables:変数を追加する...||``で、新しい変数**c** と **color** を作成します。
+そして、最初だけに ``||variables:変数 〜 を 0 にする||`` を２個セットして、変数名を **c** と **color** にかえ、 ``||advanced:高度なブロック||``にある``||text:文字列||``の一番上にある``||text:" "||``をセットします。
 （1は文字列として扱われます。）
 
 ```blocks
-let color = "1"
+let c = ""
+let color = ""
 ```
 
 ## 3.キー入力を受け取る（入力の受付1）
@@ -259,12 +259,12 @@ basic.forever(function () {
 ```
 
 ## 3.キー入力を受け取る（入力の受付2）
-``||logic:もし〜なら||``ブロックの ``||variables:mode||`` =  1　の下に、``||variables:colorを（　）にする||``をセットします。 
+``||logic:もし〜なら||``ブロックの ``||variables:mode||`` =  1　の下に、``||variables:cを（　）にする||``をセットします。 
 
 ```blocks
 basic.forever(function () {
     if (mode == 1) {
-        color = 0
+        c = 0
     } else {
     	
     }
@@ -273,14 +273,14 @@ basic.forever(function () {
 ```
 
 ## 3.キー入力を受け取る（入力の受付3）
-``||variables:colorを 0 にする||`` の 0 の部分に、``||keypad:KeyPad value(string)||``をいれます。
+``||variables:cを 0 にする||`` の 0 の部分に、``||keypad:KeyPad value(string)||``をいれます。
 代入のブロックの後に、``||basic:一時停止（ミリ秒）||``を入れます。時間は300ミリ秒にしてください。
 
 
 ```blocks
 basic.forever(function () {
     if (mode == 1) {
-        color = keypad.getKeyString()
+        c = keypad.getKeyString()
         basic.pause(300)
     } else {
     	
@@ -290,15 +290,15 @@ basic.forever(function () {
 ```
 
 ## 3.キー入力を受け取る（入力の受付4）
-``||basic:一時停止（ミリ秒）||``の後に、``||basic:文字列を表示（　）||`` に ``||variables:color||`` をセットして代入した文字列を表示します。
+``||basic:一時停止（ミリ秒）||``の後に、``||basic:文字列を表示（　）||`` に ``||variables:c||`` をセットして代入した文字列を表示します。
 
 
 ```blocks
 basic.forever(function () {
     if (mode == 1) {
-        color = keypad.getKeyString()
+        c = keypad.getKeyString()
         basic.pause(300)
-        basic.showString(color)
+        basic.showString(c)
     } else {
     	
     }
@@ -329,12 +329,12 @@ let mode = 0
 let strip: neopixel.Strip = null
 strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
 mode = 0
-let color = "1"
+let c = ""
 basic.forever(function () {
     if (mode == 1) {
-        color = keypad.getKeyString()
+        c = keypad.getKeyString()
         basic.pause(300)
-        basic.showString(color)
+        basic.showString(c)
     } else {
     	
     }
@@ -345,125 +345,211 @@ basic.forever(function () {
 ここまでできたら、micro:bit にダウンロードして実際に動かしてみましょう。
 キーパッドは、平らなところにおいて、ゆっくり押さえるようにしてください。
 
+## 4.カラーコード作る（説明）  @showdialog
 
-## 4. LEDを光らせる @showdialog
+- LEDを光らせるカラーコードを rgb という配列に収めます。（初期状態は空の配列にします。）
+- キーパッドの入力から数を作り、赤・緑・青の順に決めます。
+- それぞれの色の色番号の区切れ目には「A」のキーを押します。
+- Aが押されたら、前から順に数を書き換えます。
+
+## 4.カラーコード作る（配列の作成）
+最初に カラーコードを入力する配列を作ります。
+``||advanced:高度なブロック||``にある ``||arrays:配列||``の``||arrays:変数〜を〜にする||`` を``||basic:最初だけ||`` に追加して、** - ** を２回押して **空の配列**
+にします。
+
+```blocks 
+let 配列 = ""
+
+```
+
+
+## 4.カラーコード作る（配列の作成2）
+配列名をクリックして``||variables:変数の名前を変更||`` をクリックして、変数名を **rgb** に変えます。
+
+```blocks 
+let rgb = ""
+
+```
+
+## 4.カラーコード作る（追加説明）@showdialog
+次に、 c = A で色を確定、それ以外で、色の入力を継続するプログラムを作ります。
+具体的には、以下のようにします。
+
+ -  **c = "A" ** の時に、rgb の**カウンター**番目に color を数に変換したものにする
+ -  **それ以外** の時に、c を color の末尾に追加する
+
+ ここでは、問題を簡単にするために間違えて、他の文字が入ったりすることは想定していません。
+ やり直しもできないので、やり直すときは、リセットして入力をはじめます。
+
+## 4.カラーコード作る（色の入力3）
+**mode=1** の下に、新しく``||logic:もし〜なら||`` ブロックを追加して条件を ** c = "A"** とします。
+条件を作るときは、先に右辺に``||text:文字列||``にある``||text:（" "）||``ブロックをセットして文字を**A**を入力してから、左辺に``variables:c||``を入れます。
+（順番が違うと、途中でエラーメッセージが表示されます。）
+
+```blocks
+basic.forever(function () {
+    if (mode == 1) {
+        c = keypad.getKeyString()
+        basic.pause(300)
+        basic.showString(c)
+        if (c == "A") {
+
+        } else {
+        }
+    } else {
+    	
+    }
+})
+```
+
+
+## 4.カラーコード作る（色の入力3）
+新しく追加した``||logic:もし〜なら||`` ブロックの ** c = "A"** の次に、``||arrays:配列||``から、``||arrays:配列の最後に（）を追加する||``を選びセットして、変数名``||arrays:配列||``を
+``||arrays:rgb||``に変更します。
+```blocks
+basic.forever(function () {
+    if (mode == 1) {
+        c = keypad.getKeyString()
+        basic.pause(300)
+        basic.showString(c)
+        if (c == "A") {
+            rgb.push()
+        } else {
+
+        }
+    } else {
+    	
+    }
+})
+```
+
+## 4.カラーコード作る（色の入力4）
+新しく追加した ``||arrays:rgbの最後に（）を追加する||``空欄に||text:テキスト||``の``||text:文字列（123）を数値に変換する||``を入れ、そこに``||variables:color||``を入れます。
+
+
+```blocks
+basic.forever(function () {
+    if (mode == 1) {
+        c = keypad.getKeyString()
+        basic.pause(300)
+        basic.showString(c)
+        if (c == "A") {
+            rgb.push(parseFloat(color))
+            
+        } else {
+        
+        }
+    } else {
+    	
+    }
+})
+```
+
+## 4.カラーコード作る（色の入力5）
+そして、``||variables:color||`` を ``||text:（" "）||`` ブロックを使って初期状態に戻します。
+
+```blocks
+basic.forever(function () {
+    if (mode == 1) {
+        c = keypad.getKeyString()
+        basic.pause(300)
+        basic.showString(c)
+        if (c == "A") {
+            rgb.push(parseFloat(color))
+            color = ""
+        } else {
+            
+        }
+    } else {
+    	
+    }
+})
+```
+## 4.カラーコード作る（色の入力6）
+次に、``||logic:でなければ||``の後に、``||variables:変数〜を〜にする||``ブロックを追加して、``||variables:変数||``を **color** にかえます。
+
+```blocks
+basic.forever(function () {
+    if (mode == 1) {
+        c = keypad.getKeyString()
+        basic.pause(300)
+        basic.showString(c)
+        if (c == "A") {
+            rgb.push(parseFloat(color))
+            color = ""
+        } else {
+            color = 0
+        }
+    } else {
+    	
+    }
+})
+```
+## 4.カラーコード作る（色の入力7）
+``||variables:変数 color を〜にする|| の右側に ``||text:文字列||``にある ``||text:文字列をつなげる（）（）||``をセットして、１番目の空欄に **color**、2番目の空欄に **c**をそれぞれセットします。
+
+```blocks
+basic.forever(function () {
+    if (mode == 1) {
+        c = keypad.getKeyString()
+        basic.pause(300)
+        basic.showString(c)
+        if (c == "A") {
+            rgb.push(parseFloat(color))
+            color = ""
+        } else {
+            color = "" + color + c
+        }
+    } else {
+    	
+    }
+})
+```
+
+## 5. LEDを光らせる @showdialog
 
 ここでは、入力受付モードで入力した値（変数 color）が確定したら、LEDを点灯するプログラムを作ります。
 
 （ボタン操作についての確認）
 - これまでに、モードが「入力受付モード」のときにキー入力ができるようになりました。
-- 入力した数字（例：1, 2, 3）を color に保存します。
-- colorの表示をしたら、color の値に応じてLEDの色を変えて点灯します。
+- 入力した数字から赤、緑、青の値をそれぞれ 0〜255の範囲で配列 rgbに入れました。
 
-💡 ポイント：入力（キーパッド）を終えて、画面で色番号を確認したら点灯のコマンドを実行します。
+次は、Aボタンを押した時に、ここで決めた色で点灯するようにします。
 
 
 ## 4. LEDを光らせる１
-``||basic:ずっと||`` の``||logic:もし〜なら||``ブロックの**mode=1**の一番下に、
-新しく``||logic:もし〜なら||``ブロック（フォークみたいな形のもの）を追加してます。
-左下にある ** + ** を２回押して、条件を３種類かけるように増やします。
-
-```blocks
-basic.forever(function () {
-    if (mode == 1) {
-        color = keypad.getKeyString()
-        basic.pause(300)
-        basic.showString(color)
-        if (true) {
-        	
-        } else if (false) {
-        	
-        } else if (false) {
-        	
-        } else {
-        	
-        }
-    } else {
-    	
-    }
-})
-let strip: neopixel.Strip = null
-```
-
-## 4. LEDを光らせる2
-新しく追加した``||logic:もし〜なら||`` ブロックの最初の条件が ** color = 1 ** となるようにして、
-``||neopixel:stripを赤色に点灯する||``をセットしてます。その後、``||variables:変数 mode を（）||``にするブロックを使って、``||variables:mode||`` を 0にします。
-その後、``||basic:数を表示()||``ブロックを使って``||variables:mode||``を表示します。
-
-```blocks
-basic.forever(function () {
-    if (mode == 1) {
-        color = keypad.getKeyString()
-        basic.pause(300)
-        basic.showString(color)
-        if (color == "1") {
-            strip.showColor(neopixel.colors(NeoPixelColors.Red))
-            mode = 0
-            basic.showNumber(mode)
-        } else if (false) {
-        	
-        } else if (false) {
-        	
-        } else {
-        	
-        }
-    } else {
-    	
-    }
-})
-let strip: neopixel.Strip = null
-```
-
-## 4. LEDを光らせる3
-新しく追加した``||logic:もし〜なら||`` ブロックの最初の条件が ** color = 2 ** ,** color = 3** の場合も同様にして、それぞれ、青、白でLEDを点灯して、``||variables:mode||``を0にします。
-また、``||variables:mode||``を表示します。
-
-```blocks
-basic.forever(function () {
-    if (mode == 1) {
-        color = keypad.getKeyString()
-        basic.pause(300)
-        basic.showString(color)
-        if (color == "1") {
-            strip.showColor(neopixel.colors(NeoPixelColors.Red))
-            mode = 0
-            basic.showNumber(mode)
-        } else if (color == "2") {
-            strip.showColor(neopixel.colors(NeoPixelColors.Blue))
-            mode = 0
-            basic.showNumber(mode)
-        } else if (color == "3") {
-            strip.showColor(neopixel.colors(NeoPixelColors.White))
-            mode = 0
-            basic.showNumber(mode)
-        } else {
-        	
-        }
-    } else {
-    	
-    }
-})
-let strip: neopixel.Strip = null
-```
-
-
-
-## 4. LEDを光らせる4
-``||input:ボタンAが押されたとき||``の上の``||neopixel:stripを赤色に点灯する||``の赤をblackにかえる 。
+``||input:ボタンA〜||`` の中の ``||logic:もし〜なら||``ブロックの**でなければ**のかにある ``||neopixel:strip を点灯する||`` ブロックの 色の部分（**blac**）に、``||neopixel:Neopixel||`` の ``||neopixel:その他||``にある``||neopixel:rgb() () ()||``というブロックを当てはめます。  
 
 ```blocks
 input.onButtonPressed(Button.A, function () {
     if (mode == 0) {
         mode = 1
         basic.showNumber(mode)
-        strip.showColor(neopixel.colors(NeoPixelColors.Black))
+        strip.showColor(neopixel.colors(NeoPixelColors.Red))
     } else {
+        strip.showColor(neopixel.rgb(255, 255, 255))
         mode = 0
         basic.showNumber(mode)
-        strip.showColor(neopixel.colors(NeoPixelColors.Black))
     }
 })
 let strip: neopixel.Strip = null
+```
+
+## 4. LEDを光らせる2
+新しく追加した ``||neopixel:rgb() () ()||``の空欄に ``||arrays:配列||``にある``||arrays:配列の（）番目||`` をそれぞれ入れて、``||variables:配列||``を``||variables:rgb||``  に変えて、前から **0番目**,**1番目**,**2番目**とします。
+
+```blocks
+input.onButtonPressed(Button.A, function () {
+    if (mode == 0) {
+        mode = 1
+        basic.showNumber(mode)
+        strip.showColor(neopixel.colors(NeoPixelColors.Red))
+    } else {
+        mode = 0
+        basic.showNumber(mode)
+        strip.showColor(neopixel.rgb(rgb[0], rgb[1], rgb[2]))
+    }
+})
 ```
 
 
@@ -475,18 +561,17 @@ input.onButtonPressed(Button.A, function () {
     if (mode == 0) {
         mode = 1
         basic.showNumber(mode)
-        strip.showColor(neopixel.colors(NeoPixelColors.Black))
+        strip.showColor(neopixel.colors(NeoPixelColors.Red))
     } else {
         mode = 0
         basic.showNumber(mode)
-        strip.showColor(neopixel.colors(NeoPixelColors.Black))
+        strip.showColor(neopixel.rgb(rgb[0], rgb[1], rgb[2]))
     }
 })
-let color = ""
+let rgb: number[] = []
 let mode = 0
 let strip: neopixel.Strip = null
 strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
-mode = 0
 keypad.setKeyPad4(
 DigitalPin.P0,
 DigitalPin.P1,
@@ -497,25 +582,20 @@ DigitalPin.P14,
 DigitalPin.P15,
 DigitalPin.P16
 )
+mode = 0
+let c = ""
+let color = ""
+rgb = []
 basic.forever(function () {
     if (mode == 1) {
-        color = keypad.getKeyString()
+        c = keypad.getKeyString()
         basic.pause(300)
-        basic.showString(color)
-        if (color == "1") {
-            strip.showColor(neopixel.colors(NeoPixelColors.Red))
-            mode = 0
-            basic.showNumber(mode)
-        } else if (color == "2") {
-            strip.showColor(neopixel.colors(NeoPixelColors.Blue))
-            mode = 0
-            basic.showNumber(mode)
-        } else if (color == "3") {
-            strip.showColor(neopixel.colors(NeoPixelColors.White))
-            mode = 0
-            basic.showNumber(mode)
+        basic.showString(c)
+        if (c == "A") {
+            rgb.push(parseFloat(color))
+            color = ""
         } else {
-        	
+            color = "" + color + c
         }
     } else {
     	
