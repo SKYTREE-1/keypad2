@@ -134,7 +134,7 @@ DigitalPin.P16
 
 では、プログラムを作りましょう。
 
-## 2. 状態（モード）の設置（変数の作成）
+## 2. 状態（モード）の設定（変数の作成）
 ``||variables:変数||`` の``||variables:変数を追加する...||``で、新しい変数 **mode** を作成します。
 また、最初だけに ``||variables:変数 mode を 0 にする||`` をセットします。
 
@@ -142,7 +142,7 @@ DigitalPin.P16
 let mode = 0
 ```
 
-## 2. 状態（モード）の設置（modeの切り替え）
+## 2. 状態（モード）の設定（modeの切り替え）
 ``||input:ボタンAが押されたとき||`` をだします。
 ``||logic:論理||`` にある、フォークの形のブロックを``||input:ボタンAが押されたとき||`` にセットして、条件のところが **mode = 0** となるようにブロックをセットします。
 
@@ -157,7 +157,7 @@ input.onButtonPressed(Button.A, function () {
 })
 let strip: neopixel.Strip = null
 ```
-## 2. 状態（モード）の設置（modeの切り替え）
+## 2. 状態（モード）の設定（modeの切り替え）
 ``||input:ボタンAが押されたとき||`` のなかの条件分岐の **mode = 0**  後に ``||variables:変数||``から、``||variables:変数 mode を 0 にする||`` をセットして、0を１に変えます。
 その後に、``||basic:基本||`` にある``||basic:数を表示（　）||`` を入れ、0の部分に``||variables:mode||`` をあてはめます。
 また、``||neopixel:strip を赤色に点灯する||``を、``||basic:数を表示（　）||``の下に移動します。
@@ -175,7 +175,7 @@ input.onButtonPressed(Button.A, function () {
 let strip: neopixel.Strip = null
 ```
 
-## 2. 状態（モード）の設置（modeの切り替え）
+## 2. 状態（モード）の設定（modeの切り替え）
 ``||input:ボタンAが押されたとき||``のなかの条件分岐の **でなければ**の後に、``||variables:変数 mode を 0 にする||``をセットします。
 その後に、``||basic:基本||`` にある``||basic:数を表示（　）||`` 追加して、0の部分に``||variables:mode||`` をあてはめます。
 また、``||neopixel:strip をblackに点灯する||``を、``||basic:数を表示（　）||``の下に追加します。
@@ -195,7 +195,7 @@ input.onButtonPressed(Button.A, function () {
 let strip: neopixel.Strip = null
 ```
 
-## 2. 状態（モード）の設置（テスト） @showdialog
+## 2. 状態（モード）の設定（テスト） @showdialog
 ここまでのプログラムです。
 
 
@@ -221,7 +221,7 @@ basic.forever(function () {
 })
 
 ```
-##  2.状態（モード）の設置（テスト） 
+##  2.状態（モード）の設定（テスト） 
 micro:bit にダウンロードして実際に動かしてみましょう。
 A ボタンを押すことで、モードの表示が切り替わることが確認できたら、次へ進みましょう。
 
