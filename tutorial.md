@@ -537,13 +537,14 @@ let strip: neopixel.Strip = null
 
 ## 4. LEDを光らせる2
 新しく追加した ``||neopixel:rgb() () ()||``の空欄に ``||arrays:配列||``にある``||arrays:配列の（）番目||`` をそれぞれ入れて、``||variables:配列||``を``||variables:rgb||``  に変えて、前から **0番目**,**1番目**,**2番目**とします。
+また、**mode=0**の中で、テストようにLEDを赤で点灯させて今sたが、**black** に変えて消灯するようにします。
 
 ```blocks
 input.onButtonPressed(Button.A, function () {
     if (mode == 0) {
         mode = 1
         basic.showNumber(mode)
-        strip.showColor(neopixel.colors(NeoPixelColors.Red))
+        strip.showColor(neopixel.colors(NeoPixelColors.Black))
     } else {
         mode = 0
         basic.showNumber(mode)
@@ -561,7 +562,7 @@ input.onButtonPressed(Button.A, function () {
     if (mode == 0) {
         mode = 1
         basic.showNumber(mode)
-        strip.showColor(neopixel.colors(NeoPixelColors.Red))
+        strip.showColor(neopixel.colors(NeoPixelColors.Black))
     } else {
         mode = 0
         basic.showNumber(mode)
@@ -602,14 +603,14 @@ basic.forever(function () {
     }
 })
 ```
-## 4. LEDを光らせる5 テスト
+## 5. LEDを光らせる5 テスト
 ここまでできたら、micro:bit にダウンロードして実際に動かしてみましょう。
 キーパッドは、平らなところにおいて、ゆっくり押さえるようにしてください。
 
 
 
 ## 🌈 ここまでのプログラムを振り返ろう@showdialog
-ここまでで、Aボタンでモードを切り替えて、キーパットから番号を指定して、番号に対応した色でLEDを光らせるプログラムを作成しました。
+ここまでで、Aボタンでモードを切り替えて、キーパットから色のrgbの値を指定して、それに対応した色でLEDを光らせるプログラムを作成しました。
 
 少し長いプログラムなので、おおよその処理の流れを図で確認しましょう。
 
@@ -618,7 +619,8 @@ basic.forever(function () {
 ```
 ## 5. もっと工夫しよう@showdialog
 
-さいごは、keypad と テープLEDを使って、じゆうにあそんでみよう！
+さいごは、keypad と テープLEDを使って、じゆうにあそんでみてください。
+色の番号を決める部分は、たとえば、関数にして呼び出すようにすると、コードが見やすくなります。
 
 
 ![子どもたちが活動している](https://www.kodai.uec.ac.jp/sk/make-code/np/img_presentation.png)
