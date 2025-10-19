@@ -79,9 +79,20 @@ DigitalPin.P16
 はじめに、テープLEDを光らせるテストをします。
 ``||neopixel: NeoPixel ||`` にある ``||variables:変数 strip を〜||``を``||basic:最初だけ||``にいれて``||neopixel: 端子P0に接続しているLED24個の〜 ||``の端子を P12に変更して、「24」を「8」にかえます。  
 
-   ```blocks
-   let strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
-   ```
+```blocks
+let strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
+keypad.setKeyPad4(
+DigitalPin.P0,
+DigitalPin.P1,
+DigitalPin.P2,
+DigitalPin.P8,
+DigitalPin.P13,
+DigitalPin.P14,
+DigitalPin.P15,
+DigitalPin.P16
+)
+
+```
 
 ## テープLEDを光らせよう2　全部赤で光らせる
 ``||input:入力||``から``||input:ボタンAが押されたとき||``をだして、``||neopixel:strip を赤色に点灯する||``をいれる。
@@ -98,7 +109,18 @@ DigitalPin.P16
 ## テープLEDを光らせよう3　テスト@showdialog
 ここまでのプログラムがです。
    ```blocks
-   let strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
+let strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
+keypad.setKeyPad4(
+DigitalPin.P0,
+DigitalPin.P1,
+DigitalPin.P2,
+DigitalPin.P8,
+DigitalPin.P13,
+DigitalPin.P14,
+DigitalPin.P15,
+DigitalPin.P16
+)
+
    input.onButtonPressed(Button.A, function () {
     strip.showColor(neopixel.colors(NeoPixelColors.Red))
     })
@@ -216,6 +238,16 @@ let mode = 0
 let strip: neopixel.Strip = null
 strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
 mode = 0
+keypad.setKeyPad4(
+DigitalPin.P0,
+DigitalPin.P1,
+DigitalPin.P2,
+DigitalPin.P8,
+DigitalPin.P13,
+DigitalPin.P14,
+DigitalPin.P15,
+DigitalPin.P16
+)
 basic.forever(function () {
 	
 })
@@ -240,6 +272,20 @@ A ボタンを押すことで、モードの表示が切り替わることが確
 （1は文字列として扱われます。）
 
 ```blocks
+let mode = 0
+let strip: neopixel.Strip = null
+strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
+mode = 0
+keypad.setKeyPad4(
+DigitalPin.P0,
+DigitalPin.P1,
+DigitalPin.P2,
+DigitalPin.P8,
+DigitalPin.P13,
+DigitalPin.P14,
+DigitalPin.P15,
+DigitalPin.P16
+)
 let c = ""
 let color = ""
 ```
@@ -329,6 +375,16 @@ let mode = 0
 let strip: neopixel.Strip = null
 strip = neopixel.create(DigitalPin.P12, 8, NeoPixelMode.RGB)
 mode = 0
+keypad.setKeyPad4(
+DigitalPin.P0,
+DigitalPin.P1,
+DigitalPin.P2,
+DigitalPin.P8,
+DigitalPin.P13,
+DigitalPin.P14,
+DigitalPin.P15,
+DigitalPin.P16
+)
 let c = ""
 basic.forever(function () {
     if (mode == 1) {
