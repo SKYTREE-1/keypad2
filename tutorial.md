@@ -43,7 +43,7 @@ keypad=github:lioujj/pxt-keypad
 
 👉 kiypad を上にして、左から番号を振っています。
 
-![配線図2](https://github.com/SKYTREE-1/keypad1/blob/7da951ecda1ca0e339f5be36227d626886317810/images/wiring-diagram_keypad.png?raw=true)
+![配線図2](https://raw.githubusercontent.com/SKYTREE-1/keypad1/3ee6caef52b3e570270b9936053c9ac69e8b202b/images/wiring-diagram_keypad.png?raw=true)
  
 
 ## 1. 接続しよう2（キーパッドの初期化） @showdialog
